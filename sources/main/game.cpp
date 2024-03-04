@@ -58,13 +58,13 @@ void game_init()
   input.onMouseWheelEvent += [](const SDL_MouseWheelEvent &e) { arccam_mouse_wheel_handler(e, scene->userCamera.arcballCamera); };
 
 
-  auto material = make_material("character", "sources/shaders/character_vs.glsl", "sources/shaders/character_ps.glsl");
+  auto material = make_material("character", ROOT_PATH"sources/shaders/character_vs.glsl", ROOT_PATH"sources/shaders/character_ps.glsl");
   std::fflush(stdout);
-  material->set_property("mainTex", create_texture2d("resources/MotusMan_v55/MCG_diff.jpg"));
+  material->set_property("mainTex", create_texture2d(ROOT_PATH"resources/MotusMan_v55/MCG_diff.jpg"));
 
   scene->characters.emplace_back(Character{
     glm::identity<glm::mat4>(),
-    load_mesh("resources/MotusMan_v55/MotusMan_v55.fbx", 0),
+    load_mesh(ROOT_PATH"resources/MotusMan_v55/MotusMan_v55.fbx", 0),
     std::move(material)
   });
   std::fflush(stdout);

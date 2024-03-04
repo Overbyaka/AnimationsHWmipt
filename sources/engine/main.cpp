@@ -1,5 +1,8 @@
 #include "application.h"
 
+#include <filesystem>
+#include <iostream>
+
 
 extern void init_application(const char *project_name, int width, int height, bool full_screen);
 extern void close_application();

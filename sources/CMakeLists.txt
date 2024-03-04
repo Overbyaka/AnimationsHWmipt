@@ -10,18 +10,10 @@ project(${EXE_NAME})
 set(SRC_ROOT ${CMAKE_SOURCE_DIR})
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "-m64 -Wall -Wextra -Wno-pragma-pack -Wno-deprecated-declarations -Wno-deprecated-copy -g")
-
-
-if(BUILD_TYPE STREQUAL "dbg")
-    set(CMAKE_BUILD_TYPE "Debug")
-else()
-    if(BUILD_TYPE STREQUAL "dev")
-        set(CMAKE_BUILD_TYPE "RelWithDebInfo")
-    else()
-        set(CMAKE_BUILD_TYPE "Release")
-    endif()
-endif()
+set(CMAKE_CXX_FLAGS "/w /Zi")
+#set(CMAKE_CXX_FLAGS "/Wall /Zi")
+# TODO: translate all warning exclustions to msvc (/WdXXXX)
+#set(CMAKE_CXX_FLAGS "-m64 -Wall -Wextra -Wno-pragma-pack -Wno-deprecated-declarations -Wno-deprecated-copy -g")
 
 
 if(WIN32)
@@ -30,18 +22,18 @@ if(WIN32)
 
     add_library(SDL2 STATIC IMPORTED)
     set_target_properties(SDL2 PROPERTIES
-        IMPORTED_LOCATION_RELEASE "${CMAKE_BINARY_DIR}/../libSDL2.a"
-        IMPORTED_LOCATION_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/../libSDL2.a"
-        IMPORTED_LOCATION_DEBUG "${CMAKE_BINARY_DIR}/../libSDL2.a"
+        IMPORTED_LOCATION_RELEASE "${CMAKE_BINARY_DIR}/SDL2.lib"
+        IMPORTED_LOCATION_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/SDL2.lib"
+        IMPORTED_LOCATION_DEBUG "${CMAKE_BINARY_DIR}/SDL2.lib"
         LINKER_LANGUAGE CXX)
 
     set(ADDITIONAL_LIBS ${ADDITIONAL_LIBS} assimp)
 
     add_library(assimp STATIC IMPORTED)
     set_target_properties(assimp PROPERTIES
-        IMPORTED_LOCATION_DEBUG "${CMAKE_BINARY_DIR}/../assimp.lib"
-        IMPORTED_LOCATION_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/../assimp.lib"
-        IMPORTED_LOCATION_RELEASE "${CMAKE_BINARY_DIR}/../assimp.lib"
+        IMPORTED_LOCATION_DEBUG "${CMAKE_BINARY_DIR}/assimp.lib"
+        IMPORTED_LOCATION_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/assimp.lib"
+        IMPORTED_LOCATION_RELEASE "${CMAKE_BINARY_DIR}/assimp.lib"
         LINKER_LANGUAGE CXX)
 else()
     set(ADDITIONAL_LIBS -ldl)
@@ -50,7 +42,7 @@ else()
     find_package(assimp REQUIRED)
 endif()
 
-
+add_compile_definitions(ROOT_PATH="${CMAKE_SOURCE_DIR}/../")
 
 macro(add_folder folder)
     file(GLOB_RECURSE TMP_SOURCES RELATIVE ${SRC_ROOT} ${folder}/*.cpp)

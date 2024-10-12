@@ -76,7 +76,7 @@ include_directories(${SRC_ROOT})
 include_directories(${SRC_ROOT}/engine)
 include_directories(${SRC_ROOT}/3rd_party)
 
-add_executable(${EXE_NAME} ${EXE_SOURCES} "render/scene.cpp" "render/scene.h" "render/skeleton.cpp" "render/skeleton.h")
+add_executable(${EXE_NAME} ${EXE_SOURCES} "render/scene.cpp" "render/scene.h"   "render/animation.cpp" "main/ImGuizmo.cpp" "main/ImGuizmo.h" "render/animation.h")
 
 target_link_libraries(${EXE_NAME} ${ADDITIONAL_LIBS})
 

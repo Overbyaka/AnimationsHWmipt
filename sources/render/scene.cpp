@@ -4,7 +4,8 @@
 #include <assimp/postprocess.h>
 #include <log.h>
 MeshPtr create_mesh(const aiMesh* mesh);
-SkeletonPtr load_skeleton(const aiNode* node);
+SkeletonPtr create_skeleton(const aiNode& ai_node);
+AnimationPtr create_animation(const aiAnimation& ai_animation, const SkeletonPtr& skeleton);
 SceneAsset load_scene(const char* path, int load_flags)
 {
     Assimp::Importer importer;
@@ -29,8 +30,16 @@ SceneAsset load_scene(const char* path, int load_flags)
     }
     if (load_flags & SceneAsset::LoadScene::Skeleton)
     {
-        result.skeleton = load_skeleton(scene->mRootNode);
+        result.skeleton = create_skeleton(*scene->mRootNode);
     }
+    if (load_flags & SceneAsset::LoadScene::Animation && result.skeleton)
+    {
+        result.animations.reserve(scene->mNumAnimations);
+        for (size_t i = 0; i < scene->mNumAnimations; i++)
+            if (AnimationPtr animation = create_animation(*scene->mAnimations[i], result.skeleton))
+                result.animations.emplace_back(std::move(animation));
+    }
+    
     importer.FreeScene();
     return result;
 }

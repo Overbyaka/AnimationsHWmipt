@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\sources",
+    "\\sources\\engine",
+    "\\sources\\main",
+    "\\sources\\render",
+    "\\sources\\shaders"
   ],
-  "SelectedNode": "\\C:\\Users\\MSI\\Desktop\\Study\\AnimationsHWmipt_PKiyashko\\sources\\CMakeLists.txt\\animations.exe\\C:\\Users\\MSI\\Desktop\\Study\\AnimationsHWmipt_PKiyashko\\sources\\render\\texture2d.cpp",
+  "SelectedNode": "\\sources\\engine\\application.cpp",
   "PreviewInSolutionExplorer": false
 }

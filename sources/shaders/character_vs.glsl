@@ -18,6 +18,17 @@ layout(location = 3) in vec4 BoneWeights;
 layout(location = 4) in uvec4 BoneIndex;
 
 out VsOutput vsOutput;
+out vec3 boneColors;
+
+vec3 get_random_color(uint x)
+{
+  x += 1u;
+  vec3 col = vec3(1.61803398875);
+  col = fract(col) * vec3(x,x,x);
+  col = fract(col) * vec3(1,x,x);
+  col = fract(col) * vec3(1,1,x);
+  return fract(col);
+}
 
 void main()
 {
@@ -29,5 +40,12 @@ void main()
   vsOutput.WorldPosition = VertexPosition;
 
   vsOutput.UV = UV;
+
+  boneColors = vec3(0);
+
+  for (int  i = 0; i < 4; i++)
+  {
+     boneColors += get_random_color(BoneIndex[i]) * BoneWeights[i]; 
+  }
 
 }

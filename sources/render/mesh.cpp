@@ -7,6 +7,7 @@
 #include <log.h>
 #include "glad/glad.h"
 
+SkeletonPtr load_skeleton(const aiNode* node);
 
 static void create_indices(const std::vector<unsigned int> &indices)
 {
@@ -129,7 +130,6 @@ MeshPtr create_mesh(const aiMesh *mesh)
     {
         int numBones = mesh->mNumBones;
         meshPtr->bones.resize(numBones);
-        std::map<std::string, uint32_t> boneNames;
 
         for (int i = 0; i < numBones; i++)
         {
@@ -146,7 +146,7 @@ MeshPtr create_mesh(const aiMesh *mesh)
             meshPtr->bones[i].bindPose = glm::inverse(mOffsetMatrix);
             meshPtr->bones[i].name = bone->mName.C_Str();
             meshPtr->bones[i].index = i;
-            boneNames[bone->mName.C_Str()] = i;
+            meshPtr->boneNamesMap[bone->mName.C_Str()] = i;
             auto parent = bone->mNode->mParent;
             if (parent != nullptr)
             {
@@ -158,7 +158,7 @@ MeshPtr create_mesh(const aiMesh *mesh)
             }
             else
             {
-                meshPtr->bones[i].parentIndex = boneNames[parent->mName.C_Str()];
+                meshPtr->bones[i].parentIndex = meshPtr->boneNamesMap[parent->mName.C_Str()];
             }
 
         }
@@ -184,7 +184,8 @@ MeshPtr load_mesh(const char *path, int idx)
     return nullptr;
   }
 
-  return create_mesh(scene->mMeshes[idx]);
+  MeshPtr mesh = create_mesh(scene->mMeshes[idx]);
+  return mesh;
 }
 
 void render(const MeshPtr &mesh)

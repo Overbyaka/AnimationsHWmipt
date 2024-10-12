@@ -1,2 +1,2 @@
-![image](https://github.com/user-attachments/assets/3bfd59ba-c1fe-4c70-ae6b-51133098b654)
-![image](https://github.com/user-attachments/assets/bf4d90c1-cedf-4019-b4b7-4615d672be98)
+![Последовательность 01](https://github.com/user-attachments/assets/b2dd125f-3a6d-40ae-a722-3f5b7ffa38d9)
+
